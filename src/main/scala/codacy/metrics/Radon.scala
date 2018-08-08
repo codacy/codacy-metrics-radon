@@ -43,7 +43,7 @@ object Radon extends MetricsTool {
       val fileMaxComplexity = fileComplexity.flatMap(_.methods.map(_.complexity).reduceOption(_ max _))
       FileMetrics(
         fileLoc.filename,
-        loc = Some(fileLoc.sloc),
+        loc = Some(fileLoc.loc),
         cloc = Some(fileLoc.comments),
         complexity = fileMaxComplexity,
         nrMethods = fileComplexity.map(_.methods.length),
