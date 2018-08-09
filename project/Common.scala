@@ -10,7 +10,6 @@ object Common {
 
   private val radonVersion = scala.io.Source.fromFile(".radon-version").mkString.trim
 
-
   val dockerSettings: Seq[Def.Setting[_]] = Seq(
     packageName in Docker := packageName.value,
     dockerAlias := DockerAlias(None, Some("codacy"), name.value, Some(version.value)),
@@ -34,8 +33,7 @@ object Common {
                |python3 -m ensurepip &&
                |python3 -m pip install -I -U --no-cache-dir radon==$radonVersion &&
                |rm -rf /tmp/* &&
-               |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator(), " ")
-          ))
+               |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator(), " ")))
 
       case other => List(other)
     })

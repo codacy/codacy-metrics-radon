@@ -9,13 +9,10 @@ class RadonSpec extends Specification {
 
   val expectedAStarFileMetric =
     FileMetrics(
-      "codacy/metrics/astar.py",
-      Some(16),
-      Some(179),
-      Some(7),
-      Some(28),
-      None,
-      Set(
+      filename = "codacy/metrics/astar.py",
+      complexity = Some(16),
+      nrMethods = Some(28),
+      lineComplexities = Set(
         LineComplexity(67, 2),
         LineComplexity(74, 2),
         LineComplexity(23, 1),
@@ -47,13 +44,10 @@ class RadonSpec extends Specification {
 
   val expectedRBTreeFileMetric =
     FileMetrics(
-      "codacy/metrics/rb_tree.py",
-      Some(12),
-      Some(300),
-      Some(0),
-      Some(29),
-      None,
-      Set(
+      filename = "codacy/metrics/rb_tree.py",
+      complexity = Some(12),
+      nrMethods = Some(29),
+      lineComplexities = Set(
         LineComplexity(164, 5),
         LineComplexity(23, 1),
         LineComplexity(5, 2),
