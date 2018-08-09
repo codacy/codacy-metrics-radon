@@ -10,18 +10,19 @@ lazy val codacyMetricsRadon = project
   .enablePlugins(DockerPlugin)
   .settings(
     inThisBuild(
-      List(
-        organization := "com.codacy",
-        scalaVersion := scalaVersionNumber,
-        version := "0.1.0-SNAPSHOT",
-        scalacOptions ++= Common.compilerFlags,
-        scalacOptions in Test ++= Seq("-Yrangepos"),
-        scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"))),
+      List(organization := "com.codacy",
+           scalaVersion := scalaVersionNumber,
+           version := "0.1.0-SNAPSHOT",
+           scalacOptions ++= Common.compilerFlags,
+           scalacOptions in Test ++= Seq("-Yrangepos"),
+           scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"))
+    ),
     name := "codacy-metrics-radon",
     // App Dependencies
     libraryDependencies ++= Seq(Dependencies.Codacy.metricsSeed),
     // Test Dependencies
-    libraryDependencies ++= Seq(Dependencies.specs2).map(_ % Test))
+    libraryDependencies ++= Seq(Dependencies.specs2).map(_ % Test)
+  )
   .settings(Common.dockerSettings: _*)
 
 scalaVersion in ThisBuild := scalaVersionNumber

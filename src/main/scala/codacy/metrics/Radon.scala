@@ -35,17 +35,21 @@ object Radon extends MetricsTool {
             (lineCplx + newLineComplexity, fileMaxCplx)
         }
 
-      FileMetrics(
-        filename = complexity.filename,
-        complexity = fileMaxComplexity,
-        nrMethods = Some(complexity.methods.length),
-        lineComplexities = lineComplexities)
+      FileMetrics(filename = complexity.filename,
+                  complexity = fileMaxComplexity,
+                  nrMethods = Some(complexity.methods.length),
+                  lineComplexities = lineComplexities)
     }(collection.breakOut)
   }
 
   private def calculateComplexity(directory: String, files: Option[Set[Source.File]]): Try[Seq[RadonFileComplexity]] = {
     runTool(directory, getComplexityCommand(files))
-      .map(resultLines => Json.parse(resultLines.mkString).asOpt[Map[String, JsValue]].getOrElse(Map()))
+      .map { resultLines =>
+        Json
+          .parse(resultLines.mkString)
+          .asOpt[Map[String, JsValue]]
+          .getOrElse(Map())
+      }
       .map { output =>
         val filesWithoutErrors = output.mapValues(_.asOpt[Seq[JsValue]].toSeq.flatten)
 
@@ -60,19 +64,22 @@ object Radon extends MetricsTool {
 
   private def calculateMethodComplexity(methods: Seq[JsValue]): Seq[RadonMethodComplexity] = {
     methods.flatMap { method =>
-      val closureMetrics = (method \ "closures").asOpt[Seq[JsValue]].map(calculateMethodComplexity).toSeq.flatten
+      val closureMetrics = (method \ "closures")
+        .asOpt[Seq[JsValue]]
+        .map(calculateMethodComplexity)
+        .to[Seq]
+        .flatten
       val methodMetrics = method
         .validate[RadonMethodOutput]
         .map { metric =>
-          RadonMethodComplexity(
-            metric.name,
-            metric.lineno,
-            metric.col_offset,
-            metric.rank,
-            metric.classname,
-            metric.complexity,
-            metric.lineno,
-            metric.endline)
+          RadonMethodComplexity(metric.name,
+                                metric.lineno,
+                                metric.col_offset,
+                                metric.rank,
+                                metric.classname,
+                                metric.complexity,
+                                metric.lineno,
+                                metric.endline)
         }
         .asOpt
 
