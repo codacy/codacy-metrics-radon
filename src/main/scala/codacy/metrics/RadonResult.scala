@@ -2,13 +2,6 @@ package codacy.metrics
 import play.api.libs.json._
 
 // refer to http://radon.readthedocs.org/en/latest/commandline.html
-final case class RadonFileMetrics(filename: String,
-                                  loc: Int,
-                                  lloc: Int,
-                                  sloc: Int,
-                                  multi: Int,
-                                  comments: Int,
-                                  blank: Int)
 
 final case class RadonFileComplexity(filename: String, methods: Seq[RadonMethodComplexity])
 
@@ -22,7 +15,6 @@ final case class RadonMethodComplexity(name: String,
                                        endLine: Int)
 
 //auxiliary parse classes
-final case class RadonMetricsOutput(loc: Int, lloc: Int, sloc: Int, multi: Int, comments: Int, blank: Int)
 
 final case class RadonMethodOutput(name: String,
                                    col_offset: Int,
@@ -34,5 +26,4 @@ final case class RadonMethodOutput(name: String,
 
 object RadonResult {
   implicit val complexityFmt: Reads[RadonMethodOutput] = Json.reads[RadonMethodOutput]
-  implicit val metricsFmt: Reads[RadonMetricsOutput] = Json.reads[RadonMetricsOutput]
 }
