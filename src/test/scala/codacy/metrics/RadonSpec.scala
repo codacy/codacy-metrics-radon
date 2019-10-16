@@ -7,19 +7,21 @@ import org.specs2.mutable.Specification
 import scala.util.Try
 
 class RadonSpec extends Specification {
-  
+
   val targetDir = "src/test/resources"
   val astarFileName = "codacy/metrics/astar.py"
   val rbTreeFileName = "codacy/metrics/b_tree.py"
-  
-  def check(fileMetricsMap: Try[List[FileMetrics]], length: Int) = fileMetricsMap should beSuccessfulTry.which { fileMetrics => 
-    fileMetrics.length === length
-    forall(fileMetrics)( fileMetric =>
-      fileMetric.complexity.isDefined &&
-      fileMetric.nrMethods.isDefined &&
-      fileMetric.lineComplexities.nonEmpty
-    )
-  } 
+
+  def check(fileMetricsMap: Try[List[FileMetrics]], length: Int) = fileMetricsMap should beSuccessfulTry.which {
+    fileMetrics =>
+      fileMetrics.length === length
+      forall(fileMetrics)(
+        fileMetric =>
+          fileMetric.complexity.isDefined &&
+            fileMetric.nrMethods.isDefined &&
+            fileMetric.lineComplexities.nonEmpty
+      )
+  }
 
   "Radon" should {
     "get metrics" in {

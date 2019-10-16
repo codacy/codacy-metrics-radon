@@ -6,13 +6,11 @@ organization := "com.codacy"
 scalaVersion := "2.13.1"
 name := "codacy-metrics-radon"
 // App Dependencies
-libraryDependencies ++= Seq(
-  "com.codacy" %% "codacy-metrics-scala-seed" % "0.2.0",
-  "org.specs2" %% "specs2-core" % "4.7.1" % Test
-)
+libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.2.0",
+                            "org.specs2" %% "specs2-core" % "4.7.1" % Test)
 
 mappings in Universal ++= {
-  (resourceDirectory in Compile) map { resourceDir: File =>
+  (resourceDirectory in Compile).map { resourceDir: File =>
     val src = resourceDir / "docs"
     val dest = "/docs"
 
@@ -25,10 +23,7 @@ mappings in Universal ++= {
 val radonVersion = scala.io.Source.fromFile(".radon-version").mkString.trim
 
 Docker / packageName := packageName.value
-dockerAlias := DockerAlias(None,
-                            Some("codacy"),
-                            name.value,
-                            Some(version.value))
+dockerAlias := DockerAlias(None, Some("codacy"), name.value, Some(version.value))
 dockerBaseImage := "openjdk:8-jre-alpine"
 Docker / daemonUser := "docker"
 Docker / daemonGroup := "docker"
@@ -36,14 +31,14 @@ dockerEntrypoint := Seq(s"/opt/docker/bin/${name.value}")
 dockerCommands := dockerCommands.value.flatMap {
   case cmd @ Cmd("ADD", _) =>
     List(Cmd("RUN", "adduser -u 2004 -D docker"),
-          cmd,
-          Cmd("RUN", s"""apk update &&
+         cmd,
+         Cmd("RUN", s"""apk update &&
                |apk add bash curl python3 &&
                |python3 -m ensurepip &&
                |python3 -m pip install -I -U --no-cache-dir radon==$radonVersion &&
                |rm -rf /tmp/* &&
                |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator(), " ")),
-          Cmd("RUN", "mv /opt/docker/docs /docs"))
+         Cmd("RUN", "mv /opt/docker/docs /docs"))
 
   case other => List(other)
 }
