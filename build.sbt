@@ -23,7 +23,6 @@ mappings in Universal ++= {
 val radonVersion = scala.io.Source.fromFile(".radon-version").mkString.trim
 
 Docker / packageName := packageName.value
-dockerAlias := DockerAlias(None, Some("codacy"), name.value, Some(version.value))
 dockerBaseImage := "openjdk:8-jre-alpine"
 Docker / daemonUser := "docker"
 Docker / daemonGroup := "docker"
