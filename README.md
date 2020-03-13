@@ -1,7 +1,7 @@
 # codacy-metrics-radon
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7d43dedda0df444c99c7b0421f1099f4)](https://www.codacy.com/app/Codacy/codacy-metrics-radon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-metrics-radon&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/7d43dedda0df444c99c7b0421f1099f4)](https://www.codacy.com/app/Codacy/codacy-metrics-radon?utm_source=github.com&utm_medium=referral&utm_content=codacy/codacy-metrics-radon&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7d43dedda0df444c99c7b0421f1099f4)](https://www.codacy.com/gh/codacy/codacy-metrics-radon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-metrics-radon&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/7d43dedda0df444c99c7b0421f1099f4)](https://www.codacy.com/gh/codacy/codacy-metrics-radon?utm_source=github.com&utm_medium=referral&utm_content=codacy/codacy-metrics-radon&utm_campaign=Badge_Coverage)
 [![CircleCI](https://circleci.com/gh/codacy/codacy-metrics-radon.svg?style=svg)](https://circleci.com/gh/codacy/codacy-metrics-radon)
 [![Docker Version](https://images.microbadger.com/badges/version/codacy/codacy-metrics-radon.svg)](https://microbadger.com/images/codacy/codacy-metrics-radon "Get your own version badge on microbadger.com")
 
