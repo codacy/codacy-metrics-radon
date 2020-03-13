@@ -6,8 +6,8 @@ organization := "com.codacy"
 scalaVersion := "2.13.1"
 name := "codacy-metrics-radon"
 // App Dependencies
-libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.2.0",
-                            "org.specs2" %% "specs2-core" % "4.7.1" % Test)
+libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.2.2",
+                            "org.specs2" %% "specs2-core" % "4.9.2" % Test)
 
 mappings in Universal ++= {
   (resourceDirectory in Compile).map { resourceDir: File =>
