@@ -13,7 +13,7 @@ workflows:
       - codacy/sbt:
           name: publish_docker_local
           cmd: |
-            sbt "scalafmt / test;
+           sbt "scalafmt / test;
                  Test / scalafmt / test;
                  Sbt / scalafmt / test;
                  set Docker / version := \"latest\";
