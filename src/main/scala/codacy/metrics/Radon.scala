@@ -12,10 +12,12 @@ import scala.util.{Failure, Success, Try}
 
 object Radon extends MetricsTool {
 
-  override def apply(source: Source.Directory,
-                     language: Option[Language],
-                     files: Option[Set[Source.File]],
-                     options: Map[Options.Key, Options.Value]): Try[List[FileMetrics]] = {
+  override def apply(
+      source: Source.Directory,
+      language: Option[Language],
+      files: Option[Set[Source.File]],
+      options: Map[Options.Key, Options.Value]
+  ): Try[List[FileMetrics]] = {
 
     language match {
       case Some(lang) if lang != Languages.Python =>
@@ -72,14 +74,16 @@ object Radon extends MetricsTool {
       val methodMetrics = method
         .validate[RadonMethodOutput]
         .map { metric =>
-          RadonMethodComplexity(metric.name,
-                                metric.lineno,
-                                metric.col_offset,
-                                metric.rank,
-                                metric.classname,
-                                metric.complexity,
-                                metric.lineno,
-                                metric.endline)
+          RadonMethodComplexity(
+            metric.name,
+            metric.lineno,
+            metric.col_offset,
+            metric.rank,
+            metric.classname,
+            metric.complexity,
+            metric.lineno,
+            metric.endline
+          )
         }
         .asOpt
 
