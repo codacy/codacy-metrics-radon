@@ -13,6 +13,10 @@ workflows:
       - codacy/sbt:
           name: publish_docker_local
           cmd: |
+            # needed to run tests
+            sudo apt-get -y update;
+            sudo apt-get -y install python3-pip;
+            sudo python3 -m pip install -I -U --no-cache-dir radon==`cat .radon-version`;
            sbt "set scalafmtUseIvy in ThisBuild := false;
                  scalafmt::test;
                  test:scalafmt::test;
