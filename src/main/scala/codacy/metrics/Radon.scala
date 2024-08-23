@@ -24,22 +24,23 @@ object Radon extends MetricsTool {
         calculateComplexity(source.path, files).map(createFileMetrics)
     }
   }
-
   private def createFileMetrics(fileComplexities: Seq[RadonFileComplexity]): List[FileMetrics] =
     fileComplexities.view
       .map { complexity =>
-        val (lineComplexities, fileMaxComplexity) =
-          complexity.methods.foldLeft((Set.empty[LineComplexity], Option.empty[Int])) {
-            case ((lineCplx, fileMaxCplxOpt), methodComplexity) =>
+        val (lineComplexities, fileTotalComplexity) =
+          complexity.methods.foldLeft((Set.empty[LineComplexity], 0)) {
+            case ((lineCplx, fileTotalCplx), methodComplexity) =>
               val newLineComplexity = LineComplexity(methodComplexity.line, methodComplexity.complexity)
-              val fileMaxCplx = Some(fileMaxCplxOpt.fold(newLineComplexity.value)(_.max(newLineComplexity.value)))
-              (lineCplx + newLineComplexity, fileMaxCplx)
+              val updatedTotalComplexity = fileTotalCplx + newLineComplexity.value
+              (lineCplx + newLineComplexity, updatedTotalComplexity)
           }
 
-        FileMetrics(filename = complexity.filename,
-                    complexity = fileMaxComplexity,
-                    nrMethods = Some(complexity.methods.length),
-                    lineComplexities = lineComplexities)
+        FileMetrics(
+          filename = complexity.filename,
+          complexity = Some(fileTotalComplexity),
+          nrMethods = Some(complexity.methods.length),
+          lineComplexities = lineComplexities
+        )
       }
       .to(List)
 
@@ -51,7 +52,6 @@ object Radon extends MetricsTool {
           .asOpt[Map[String, JsValue]]
           .getOrElse(Map())
         val filesWithoutErrors = output.view.mapValues(_.asOpt[Seq[JsValue]].toSeq.flatten)
-
         filesWithoutErrors
           .map {
             case (file, jsValue) =>
@@ -97,7 +97,7 @@ object Radon extends MetricsTool {
   }
 
   private def getComplexityCommand(maybeFiles: Option[Set[Source.File]]): Seq[String] = {
-    Seq("radon", "cc", "-j", "-a", "-s") ++ maybeFiles.map(_.map(_.path)).getOrElse(Set("."))
+    Seq("radon", "cc", "--total-average", "-j", "-s") ++ maybeFiles.map(_.map(_.path)).getOrElse(Set("."))
   }
 
 }

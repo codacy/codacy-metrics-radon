@@ -3,11 +3,11 @@ import com.typesafe.sbt.packager.docker.{Cmd, DockerAlias}
 enablePlugins(JavaAppPackaging)
 enablePlugins(DockerPlugin)
 organization := "com.codacy"
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.14"
 name := "codacy-metrics-radon"
 // App Dependencies
-libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.2.2",
-                            "org.specs2" %% "specs2-core" % "4.9.2" % Test)
+libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.3.2",
+                            "org.specs2" %% "specs2-core" % "4.20.8" % Test)
 
 mappings in Universal ++= {
   (resourceDirectory in Compile).map { resourceDir: File =>
@@ -23,7 +23,7 @@ mappings in Universal ++= {
 val radonVersion = scala.io.Source.fromFile(".radon-version").mkString.trim
 
 Docker / packageName := packageName.value
-dockerBaseImage := "amazoncorretto:8-alpine3.17-jre"
+dockerBaseImage := "python:3.12-alpine3.19"
 Docker / daemonUser := "docker"
 Docker / daemonGroup := "docker"
 dockerEntrypoint := Seq(s"/opt/docker/bin/${name.value}")
@@ -32,9 +32,13 @@ dockerCommands := dockerCommands.value.flatMap {
     List(Cmd("RUN", "adduser -u 2004 -D docker"),
          cmd,
          Cmd("RUN", s"""apk update &&
-               |apk add bash curl python3 &&
-               |python3 -m ensurepip &&
-               |python3 -m pip install -I -U --no-cache-dir radon==$radonVersion &&
+               | apk upgrade &&
+               | apk add --no-cache bash &&
+               | apk add --no-cache --virtual=build-dependencies unzip &&
+               | apk add --no-cache curl &&
+               | apk add --no-cache openjdk8-jre &&
+               |python -m ensurepip &&
+               |python -m pip install -I -U --no-cache-dir radon==$radonVersion &&
                |rm -rf /tmp/* &&
                |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator(), " ")),
          Cmd("RUN", "mv /opt/docker/docs /docs"))
