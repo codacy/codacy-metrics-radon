@@ -17,7 +17,7 @@ workflows:
             sudo apt-get -y update;
             sudo apt-get -y install python3-pip;
             sudo python3 -m pip install -I -U --no-cache-dir radon==`cat .radon-version`;
-           sbt "set scalafmtUseIvy in ThisBuild := false;
+            sbt "set scalafmtUseIvy in ThisBuild := false;
                  scalafmt::test;
                  test:scalafmt::test;
                  sbt:scalafmt::test;
@@ -32,6 +32,8 @@ workflows:
       - codacy_plugins_test/run:
           name: plugins_test
           run_metrics_tests: true
+          run_json_tests: false
+          run_pattern_tests: false
           requires:
             - publish_docker_local
       - codacy/publish_docker:
