@@ -10,15 +10,15 @@ libraryDependencies ++= Seq("com.codacy" %% "codacy-metrics-scala-seed" % "0.3.2
                             "org.specs2" %% "specs2-core" % "4.20.8" % Test)
 
 mappings in Universal ++= {
-  (resourceDirectory in Compile).map { resourceDir: File =>
+  (Compile / resourceDirectory).map { resourceDir: File =>
     val src = resourceDir / "docs"
     val dest = "/docs"
 
     for {
-      path <- src.allPaths.get if !path.isDirectory
+      path <- (src ** "*").get if !path.isDirectory
     } yield path -> path.toString.replaceFirst(src.toString, dest)
-  }
-}.value
+  }.value
+}
 
 val radonVersion = scala.io.Source.fromFile(".radon-version").mkString.trim
 
