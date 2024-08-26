@@ -35,9 +35,14 @@ object Radon extends MetricsTool {
               (lineCplx + newLineComplexity, updatedTotalComplexity)
           }
 
+        val nrMethods = complexity.methods.length
+
+        //TODO change FileMetrics to Double
+        val averageComplexity = if (nrMethods > 0) math.ceil(fileTotalComplexity/nrMethods.toDouble).toInt else 0
+
         FileMetrics(filename = complexity.filename,
-                    complexity = Some(fileTotalComplexity),
-                    nrMethods = Some(complexity.methods.length),
+                    complexity = Some(averageComplexity),
+                    nrMethods = Some(nrMethods),
                     lineComplexities = lineComplexities)
       }
       .to(List)
