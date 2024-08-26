@@ -1,4 +1,4 @@
-# #Metrics: {"complexity": 8, "nrMethods": 2}
+# #Metrics: {"complexity": 11, "nrMethods": 2}
 # coding: utf-8
 
 """
@@ -13,7 +13,7 @@
     This could be extended by having nested blocks, sorting them recursively
     and flattening the end structure into a list of lines. Revision 2 maybe ^.^.
 """
-# #LineComplexity: 7
+# #LineComplexity: 5
 def sort_blocks():
     # First, we load the current README into memory
     with open('README.md', 'r') as read_me_file:
@@ -41,7 +41,7 @@ def sort_blocks():
 
     with open('README.md', 'w+') as sorted_file:
         sorted_file.write(final_README)
-# #LineComplexity: 8
+# #LineComplexity: 6
 def main():
     # First, we load the current README into memory as an array of lines
     with open('README.md', 'r') as read_me_file:

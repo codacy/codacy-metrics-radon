@@ -18,37 +18,14 @@ This is the docker engine we use at Codacy to have [Radon](https://github.com/ru
 You can create the docker by doing:
 
 ```bash
-./scripts/publish.sh
+sbt docker:publishLocal
 ```
 
 The docker is ran with the following command:
 
 ```bash
-docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
-docker run -it -v $PWD/src/test/resources:/src codacy/codacy-metrics-radon:latest
+docker run --user=docker --rm=true -v <Source_Directory>:/src codacy-metrics-radon:<docker version>
 ```
-
-## Test
-
-1) Install Radon:
-
-    * With Pip:
-    
-        ```bash
-        pip install radon
-        ```
-
-    * Or download [radon's source code](https://github.com/rubik/radon) and run the setup file:
-    
-        ```bash
-        python setup.py install
-        ```
-
-2) After that, you can run the tests:
-
-    ```bash
-    ./scripts/test.sh
-    ```
 
 ## What is Codacy
 
