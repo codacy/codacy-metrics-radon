@@ -38,7 +38,7 @@ object Radon extends MetricsTool {
         val nrMethods = complexity.methods.length
 
         //TODO change FileMetrics to Double
-        val averageComplexity = if (nrMethods > 0) math.ceil(fileTotalComplexity/nrMethods.toDouble).toInt else 0
+        val averageComplexity = if (nrMethods > 0) math.ceil(fileTotalComplexity / nrMethods.toDouble).toInt else 0
 
         FileMetrics(filename = complexity.filename,
                     complexity = Some(averageComplexity),
