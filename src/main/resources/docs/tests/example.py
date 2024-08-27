@@ -1,4 +1,4 @@
-# #Metrics: {"complexity": 11, "nrMethods": 2}
+# #Metrics: {"complexity": 6, "nrMethods": 2}
 # coding: utf-8
 
 """
